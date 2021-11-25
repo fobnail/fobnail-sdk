@@ -1,9 +1,10 @@
-FROM rust:1.55.0-slim-buster
+FROM rust:1.56.0-slim-buster
 
 RUN apt-get update && apt-get install -y \
     libusb-1.0-0-dev \
     libftdi1-dev \
     pkg-config \
+    libudev-dev \
     && \
     rm -rf /var/lib/apt/lists/*
 
