@@ -5,6 +5,10 @@ RUN apt-get update && apt-get install -y \
     libftdi1-dev \
     pkg-config \
     libudev-dev \
+    iproute2 \
+    net-tools \
+    iputils-ping \
+    iptables \
     && \
     rm -rf /var/lib/apt/lists/*
 
