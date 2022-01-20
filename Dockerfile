@@ -11,6 +11,10 @@ RUN apt-get update && apt-get install -y \
     iptables \
     curl \
     gcc \
+    llvm-7 \
+    libclang1-7 \
+    clang \
+    gcc-arm-none-eabi \
     && \
     rm -rf /var/lib/apt/lists/*
 
@@ -22,7 +26,9 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o /tmp/rustup-ini
     chmod +x /tmp/rustup-init && \
     /tmp/rustup-init -y --no-modify-path \
         --default-toolchain nightly-2022-01-13 \
-        -t thumbv7em-none-eabihf && \
+        -t thumbv7em-none-eabihf \
+	-c llvm-tools-preview \
+	&& \
     rm /tmp/rustup-init
 
 RUN cargo install cargo-embed && cargo install probe-rs-cli && \
@@ -30,7 +36,10 @@ RUN cargo install cargo-embed && cargo install probe-rs-cli && \
 
 RUN useradd -ms /bin/bash build && \
     usermod -aG sudo,dialout build && \
-    echo 'export CARGO_HOME=~/.cargo' >> /home/build/.bashrc
+    echo 'export CARGO_HOME=~/.cargo' >> /home/build/.bashrc && \
+    echo 'export LLVM_CONFIG_PATH=/usr/bin/llvm-config-7' >> /home/build/.bashrc && \
+    echo 'export LIBCLANG_PATH=/usr/lib/llvm-7/lib' >> /home/build/.bashrc && \
+    ln -s /usr/lib/llvm-7/lib/libclang-7.so.1 /usr/lib/llvm-7/lib/libclang-7.so
 
 USER build
 WORKDIR /home/build
