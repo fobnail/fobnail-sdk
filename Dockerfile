@@ -27,8 +27,8 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o /tmp/rustup-ini
     /tmp/rustup-init -y --no-modify-path \
         --default-toolchain nightly-2022-01-13 \
         -t thumbv7em-none-eabihf \
-	-c llvm-tools-preview \
-	&& \
+    -c llvm-tools-preview \
+    && \
     rm /tmp/rustup-init
 
 RUN cargo install cargo-embed && cargo install probe-rs-cli && \
