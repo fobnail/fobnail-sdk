@@ -1,4 +1,4 @@
-FROM debian:buster-slim
+FROM debian:oldstable-20220125-slim
 
 RUN apt-get update && apt-get install -y \
     libusb-1.0-0-dev \
@@ -31,7 +31,8 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o /tmp/rustup-ini
         && \
     rm /tmp/rustup-init
 
-RUN cargo install cargo-embed && cargo install probe-rs-cli && \
+RUN cargo install --version 0.12.0 cargo-embed && \
+    cargo install --version 0.12.0 probe-rs-cli && \
     rm -rf /usr/local/cargo/registry
 
 RUN useradd -ms /bin/bash build && \
