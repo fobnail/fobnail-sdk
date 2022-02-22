@@ -1,6 +1,7 @@
 FROM debian:oldstable-20220125-slim
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y \
     libusb-1.0-0-dev \
     libftdi1-dev \
     pkg-config \
@@ -15,8 +16,11 @@ RUN apt-get update && apt-get install -y \
     libclang1-7 \
     clang \
     gcc-arm-none-eabi \
-    && \
-    rm -rf /var/lib/apt/lists/*
+    ca-certificates \
+    sudo \
+    gosu && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
@@ -35,12 +39,9 @@ RUN cargo install --version 0.12.0 cargo-embed && \
     cargo install --version 0.12.0 probe-rs-cli && \
     rm -rf /usr/local/cargo/registry
 
-RUN useradd -ms /bin/bash build && \
-    usermod -aG sudo,dialout build && \
-    echo 'export CARGO_HOME=~/.cargo' >> /home/build/.bashrc && \
-    echo 'export LLVM_CONFIG_PATH=/usr/bin/llvm-config-7' >> /home/build/.bashrc && \
-    echo 'export LIBCLANG_PATH=/usr/lib/llvm-7/lib' >> /home/build/.bashrc && \
-    ln -s /usr/lib/llvm-7/lib/libclang-7.so.1 /usr/lib/llvm-7/lib/libclang-7.so
+RUN echo "builder ALL=NOPASSWD: ALL" > /etc/sudoers.d/builder-nopasswd && \
+    chmod 660 /etc/sudoers.d/builder-nopasswd
 
-USER build
-WORKDIR /home/build
+COPY entrypoint.sh /
+
+ENTRYPOINT ["/entrypoint.sh"]
