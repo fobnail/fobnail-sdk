@@ -2,21 +2,33 @@
 
 Dockerized fobnail software development kit
 
-## Using container
-
-Rust container is the newer version of SDK, to build it execute:
+## Build
 
 ```shell
-./build.sh
+$ ./build.sh
 ```
 
-To build a sample Rust application execute:
+## Install
+
+`run-fobnail-sdk.sh` script can be used to invoke commands within the
+`fobnail-sdk` container. Place it in the PATH for convenience. For example:
 
 ```shell
-$ git clone https://github.com/fobnail/nrf-hal
-$ cd nrf-hal
-$ git checkout blinky-demo-nrf52840
-$ ./run-container.sh
-(docker)$ cd examples/blinky-demo-nrf52840
-(docker)$ cargo build --target=thumbv7em-none-eabihf
+$ ln -s $(readlink -f ./run-fobnail-sdk.sh) ~/bin/run-fobnail-sdk.sh
+```
+
+# Run
+
+* Enter interactive shell:
+
+```shell
+$ run-fobnail-sdk.sh
+```
+
+* Execute some command (e.g. `cargo --version`)
+
+```shell
+$ run-fobnail-sdk.sh cargo --version
+
+$ run-fobnail-sdk.sh cargo  build
 ```
