@@ -11,7 +11,7 @@ fi
 FOBNAIL_SDK_VERSION="${FOBNAIL_SDK_VERSION:-latest}"
 
 docker run --privileged \
-    --rm "$_tty_opts" \
+    --rm $_tty_opts \
     -v /dev:/dev \
     -v $PWD:/build \
     -w /build \
