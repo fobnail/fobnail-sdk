@@ -8,6 +8,8 @@ else
   _tty_opts="-it"
 fi
 
+FOBNAIL_SDK_VERSION="${FOBNAIL_SDK_VERSION:-latest}"
+
 docker run --privileged \
     --rm "$_tty_opts" \
     -v /dev:/dev \
@@ -23,4 +25,4 @@ docker run --privileged \
     ${FOBNAIL_SDK_DOCKER_EXTRA_OPTS} \
     --net=host \
     --init \
-    3mdeb/fobnail-sdk "$@"
+    3mdeb/fobnail-sdk:${FOBNAIL_SDK_VERSION} "$@"
