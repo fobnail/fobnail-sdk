@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-docker build -t 3mdeb/fobnail-sdk:latest .
+docker build -t ghcr.io/fobnail/fobnail-sdk:latest .

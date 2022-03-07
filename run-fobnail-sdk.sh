@@ -25,4 +25,4 @@ docker run --privileged \
     ${FOBNAIL_SDK_DOCKER_EXTRA_OPTS} \
     --net=host \
     --init \
-    3mdeb/fobnail-sdk:${FOBNAIL_SDK_VERSION} "$@"
+    ghcr.io/fobnail/fobnail-sdk:${FOBNAIL_SDK_VERSION} "$@"
