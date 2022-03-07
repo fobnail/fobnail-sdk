@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 
+# CI job fails if interactive mode is enabled
+CI="${CI:-false}"
+if [ "$CI" = "true" ]; then
+  _tty_opts=""
+else
+  _tty_opts="-it"
+fi
+
 docker run --privileged \
-    --rm -it \
+    --rm "$_tty_opts" \
     -v /dev:/dev \
     -v $PWD:/build \
     -w /build \
