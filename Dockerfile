@@ -16,6 +16,7 @@ RUN apt-get update && \
     libclang1-7 \
     clang \
     gcc-arm-none-eabi \
+    libnewlib-arm-none-eabi \
     ca-certificates \
     sudo \
     gosu && \
