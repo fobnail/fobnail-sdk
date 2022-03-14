@@ -19,6 +19,10 @@ else
     useradd -o --uid "$USER_ID" --gid "$GROUP_ID" --create-home \
             --home-dir /home/builder builder --groups sudo,dialout
 
+    # Shellcheck uses Docker. Docker socket may not be accessible due to
+    # permissions, so make docker binary setuid.
+    chmod +s "$(which docker)"
+
     ln -s /usr/lib/llvm-7/lib/libclang-7.so.1 /usr/lib/llvm-7/lib/libclang-7.so
   fi
     GOSU="gosu builder"

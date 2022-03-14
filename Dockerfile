@@ -19,8 +19,12 @@ RUN apt-get update && \
     libnewlib-arm-none-eabi \
     ca-certificates \
     sudo \
-    gosu && \
+    gosu \
+    python3-pip \
+    git \
+    docker.io && \
     apt-get clean && \
+    pip3 install pre-commit && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV RUSTUP_HOME=/usr/local/rustup \
