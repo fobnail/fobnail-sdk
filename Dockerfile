@@ -22,14 +22,23 @@ RUN apt-get update && \
     gosu \
     python3-pip \
     git \
-    docker.io && \
+    xz-utils && \
     apt-get clean && \
     pip3 install pre-commit && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
-    PATH=/usr/local/cargo/bin:$PATH
+    PATH=/usr/local/cargo/bin:$PATH \
+    SHELLCHECK_VERSION=0.8.0
+
+RUN curl -L --proto '=https' --tlsv1.2 -sSf \
+    https://github.com/koalaman/shellcheck/releases/download/v${SHELLCHECK_VERSION}/shellcheck-v${SHELLCHECK_VERSION}.linux.x86_64.tar.xz \
+    -o /tmp/shellcheck.tar.xz && \
+    cd /tmp && \
+    tar xf shellcheck.tar.xz && \
+    cp shellcheck-v${SHELLCHECK_VERSION}/shellcheck /usr/local/bin && \
+    rm -rf shellcheck.tar.xz shellcheck-v${SHELLCHECK_VERSION}
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o /tmp/rustup-init && \
     chmod +x /tmp/rustup-init && \
