@@ -43,7 +43,7 @@ RUN curl -L --proto '=https' --tlsv1.2 -sSf \
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o /tmp/rustup-init && \
     chmod +x /tmp/rustup-init && \
     /tmp/rustup-init -y --no-modify-path \
-        --default-toolchain nightly-2022-01-13 \
+        --default-toolchain nightly-2022-08-09 \
         -t thumbv7em-none-eabihf \
         -c llvm-tools-preview \
         && \
